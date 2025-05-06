@@ -1,0 +1,848 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --gradient: linear-gradient(45deg, #00ffd5, #a800ce, #00fffb, #686de0);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --border: 1px solid rgba(255, 255, 255, 0.1);
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+body {
+    background: #000000;
+    min-height: 100vh;
+    overflow-x: hidden; /* Disable horizontal scrollbar */
+}
+/* Ensure the font is loaded */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.2rem 5%;
+    background: #000000; /* Solid black background */
+    border-bottom: var(--border);
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow);
+}
+
+.navbar.scrolled {
+    padding: 0.8rem 5%;
+    background: #000000; /* Still solid black on scroll */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2.3rem;
+    font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 8s linear infinite;
+    background-size: 300%;
+    letter-spacing: -0.5px;
+    color: #fffbfb;
+    margin-right: 20px;
+    margin-left: -60px;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 75px;
+    margin-right: 10px;
+}
+
+/* Main navigation links */
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    font-size: 1.2rem;
+    margin-left: auto; /* This pushes the links to the right */
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    font-size: 1.2rem; 
+    letter-spacing: 0.4px; 
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient);
+    background-size: 300%;
+    transition: width 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient);
+    background-size: 300%;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgb(0, 0, 0);
+}
+
+.nav-links a:hover::before,
+.nav-links a:hover::after {
+    width: 100%;
+    animation: gradient 8s linear infinite;
+}
+/* Custom style for the 'Vertex' link */
+.vertex-link {
+    font-family: "Monoton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3rem; /* Adjust size as needed */
+    color: #00ffdd; /* Default text color */
+    text-decoration: none;
+    margin-left: 40px;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease; /* Smooth transition for text color */
+    margin-right: -60px;
+}
+.vertex-link .big-x {
+    font-size: 5rem; /* Makes the X bigger */
+    vertical-align: middle;
+    line-height: 1;
+    margin-top: 10px; /* Space between text and X */
+    font-family: "Monoton", sans-serif;
+    color: #ffffff;
+}
+
+/* Hover effect specifically for the 'Vertex' link */
+.vertex-link:hover {
+    color: transparent; /* Make text transparent so the gradient is visible */
+    background: linear-gradient(45deg, #a200ff, #00f2ff, #32cd32); /* Gradient effect */
+    background-size: 200% 200%; /* For animation effect */
+    -webkit-background-clip: text; /* Makes the background apply to text */
+    background-clip: text; /* Standard property for compatibility */
+    animation: gradient 1.5s ease-in-out infinite; /* Apply the gradient animation with infinite loop */
+}
+
+/* Keyframes for the gradient movement (applies only to 'Vertex') */
+@keyframes gradient {
+    0% {
+        background-position: 200% 0; /* Start the gradient from the right */
+    }
+    50% {
+        background-position: -200% 0; /* Move the gradient to the left */
+    }
+    100% {
+        background-position: 200% 0; /* End the gradient back at the right */
+    }
+}
+
+
+
+/* Mobile toggle button */
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    z-index: 1001;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-nav-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-toggle .bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background: white;
+    transition: all 0.4s ease;
+}
+
+.mobile-nav-toggle .bar:nth-child(1) { top: 14px; }
+.mobile-nav-toggle .bar:nth-child(2) { top: 19px; }
+.mobile-nav-toggle .bar:nth-child(3) { top: 24px; }
+
+/* Mobile view styling */
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 400px;
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.99), rgba(20, 20, 20, 0.99));
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        padding: 2rem;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+
+
+    .mobile-nav-toggle.active .bar:nth-child(1) {
+        transform: translate(-50%, 5px) rotate(45deg);
+        width: 24px;
+    }
+
+    .mobile-nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-nav-toggle.active .bar:nth-child(3) {
+        transform: translate(-50%, -5px) rotate(-45deg);
+        width: 24px;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        backdrop-filter: blur(4px);
+    }
+
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+/* Carousel Container */
+.carousel {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    margin-top: 2cm;
+    box-sizing: border-box; /* Prevent overflow due to padding/border */
+}
+
+.carousel .list .item {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0 0 0 0;
+    box-sizing: border-box; /* Prevent overflow */
+}
+
+.carousel .list .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel .list .item .content {
+    position: absolute;
+    top: 10%; /* Moved content down from 10% to 25% */
+    width: 1140px;
+    max-width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-right: 30%;
+    box-sizing: border-box;
+    color: #fff;
+    text-shadow: 0 5px 10px #0004; /* Adds shadow for readability */
+    font-family: Poppins, sans-serif; /* Font for the text */
+}
+
+.carousel .list .item .content .title {
+    font-size: 5rem; /* Increased font size for the title */
+    font-weight: bold;
+    color: #fff; /* Changed text color to white */
+    text-shadow: 0 5px 10px #0004; /* Shadow for better readability */
+    margin-bottom: 10px;
+}
+
+.carousel .list .item .content .topic {
+    font-size: 3.5rem; /* Increased font size for topic */
+    font-weight: bold;
+    color: #a200ff; /* Color of the topic */
+    margin-bottom: 20px;
+}
+
+.carousel .list .item .content .des {
+    font-size: 1.2rem;
+    line-height: 1.6;
+
+    color: #ddd;
+    margin-bottom: 20px;
+    animation-delay: 1.6s !important;
+}
+
+
+.carousel .list .item .buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    gap: 20px;
+    margin-top: 30px;
+    justify-content: center;
+}
+
+.carousel .list .item .buttons button {
+    width: 150px;
+    height: 40px;
+    border: none;
+    background-color: #eee;
+    letter-spacing: 2px;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel .list .item .buttons button:nth-child(2) {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+}
+
+.carousel .list .item .buttons button:hover {
+    background-color: #5301b0;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* Animation for Text */
+.animate .title,
+.animate .topic,
+.animate .des,
+.animate .buttons {
+    transform: translateY(50px);
+    filter: blur(20px);
+    opacity: 0;
+    animation: showContent 0.5s linear forwards;
+}
+
+.animate .title {
+    animation-delay: 0.2s;
+}
+
+.animate .topic {
+    animation-delay: 0.4s;
+}
+
+.animate .des {
+    animation-delay: 0.6s;
+}
+
+.animate .buttons {
+    animation-delay: 0.8s;
+}
+
+@keyframes showContent {
+    to {
+        transform: translateY(0px);
+        filter: blur(0px);
+        opacity: 1;
+    }
+}
+
+/* Arrow Styles */
+.arrows {
+    position: fixed; /* This ensures the arrows stay fixed to the screen */
+    top: 50%; /* Vertically centers the arrows */
+    left: 0;
+    right: 0; /* Arrows should span the whole width of the screen */
+    z-index: 9999; /* Makes sure they are on top of everything else */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    transform: translateY(-50%); /* Keeps the arrows vertically centered */
+    pointer-events: all; /* Ensures the arrows are clickable */
+}
+
+.arrows button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(252, 252, 252, 0);
+    border: 2px solid #fff;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.arrows button:hover {
+    background-color: #ffffff;
+    color: #000;
+}
+
+
+/* Responsive Styles for Small Screens */
+@media screen and (max-width: 678px) {
+    .arrows {
+        display: none;
+    }
+
+    .carousel .list .item .content {
+        padding-right: 0;
+    }
+
+    .carousel .list .item .content .title {
+        font-size: 30px;
+    }
+
+    .carousel .list .item .content .topic {
+        font-size: 3rem;
+    }
+
+    .carousel .list .item .buttons {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: -100px;  /* Initially hidden below the viewport */
+    left: 0;
+    width: 100%;
+    background-color: #fffefe;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 20px;
+    transition: bottom 0.3s ease;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  /* Center the content horizontally */
+    gap: 30px;  /* Space between items */
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+}
+
+.footer-content a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;  /* Underline links on hover */
+}
+
+/* Make footer visible when scrolled to the bottom */
+.footer.show {
+    bottom: 0;  /* Bring the footer into view */
+}
+
+.bottom-black-box {
+    width: 100%;
+    height: 400px;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between; /* Ensures content on both sides */
+    align-items: center;
+    padding: 40px 50px;
+    box-sizing: border-box;
+    flex-wrap: wrap; /* Makes it responsive on smaller screens */
+}
+
+/* Left-side content (title, subheading, description) */
+.footer-info {
+    color: white;
+    max-width: 600px;
+    flex-grow: 1; /* Ensures the left content takes up remaining space */
+}
+
+/* Title */
+.footer-info h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+/* Subheading */
+.footer-info h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #dcdcdc; /* Light color for subheading */
+}
+
+/* Description */
+.footer-info p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #dcdcdc;
+    max-width: 500px;
+}
+
+/* Centered button section */
+.button-section {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Adjust space between buttons */
+    align-items: center;
+    flex-grow: 1; /* Allow the buttons section to grow in available space */
+}
+
+.button-item h3 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.button-item .button {
+    padding: 10px 50px;
+    background-color: #ffffff; /* Button color */
+    color: rgb(0, 0, 0); /* Default text color */
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #000000; /* Initial border color */
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Added border-color transition */
+    display: inline-block;
+}
+
+.button-item .button:hover {
+    background-color: #000000; /* Darker shade for hover */
+    color: #ffffff; /* Change text color to white on hover */
+    border-color: #ffffff; /* Change border color to white on hover */
+}
+
+/* Social icons (right side) */
+.social-menu ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+    margin-left: -40px; /* Move the icons more to the left */
+}
+
+.social-menu ul li {
+    list-style: none;
+}
+
+.social-menu ul li a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: white;
+    transition: 0.5s;
+    box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    text-decoration: none;
+}
+
+.social-menu ul li a i {
+    font-size: 28px;
+    color: #000000;
+    transition: 0.5s;
+}
+
+.social-menu ul li a:hover {
+    transform: translateY(-10px);
+}
+
+.social-menu ul li a:hover i {
+    color: #ffffff;
+}
+
+/* Hover background colors */
+.social-menu ul li:nth-child(1) a:hover { background-color: #3b5999; } /* Facebook */
+.social-menu ul li:nth-child(2) a:hover { background-color: #e4405f; } /* Instagram */
+.social-menu ul li:nth-child(3) a:hover { background-color: #0077B5; } /* LinkedIn */
+
+/* About & Contact Wrapper */
+.about-contact-wrapper {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-left: 0px; /* Moved more to the right */
+}
+
+.about-info, .contact-info {
+    flex: 1;
+    min-width: 250px;
+    font-size: 1.3rem; /* Make text a bit larger */
+}
+
+.about-info h3,
+.contact-info h3 {
+    font-size: 1.5rem; /* Slightly larger section titles */
+    margin-bottom: 10px; /* Space below the title */
+    margin-right: 30px;
+}
+
+.about-info p,
+.contact-info p {
+    margin-bottom: 20px; /* Space between paragraphs */
+    line-height: 1.6; /* Increase line height for readability */
+    font-size: 1.1rem; /* Make text a bit larger */
+    color: #dcdcdc; /* Light color for text */
+}
+
+.blume-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30cm;
+    height: 20cm;
+    background-color: #fff;
+    border-left: 8px solid #00a8be;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    display: none; /* Ensures it's hidden by default */
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    padding: 0;
+}
+
+
+.blume-popup-inner {
+    display: flex;
+    height: 100%;
+}
+
+.blume-popup-content {
+    flex: 1;
+    padding: 20px 30px 30px 30px; /* Reduced top padding */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Move content to top */
+}
+
+.blume-popup-header {
+    font-family: "Monoton", sans-serif;
+    font-size: 70px;
+    color: #000000;
+    margin-bottom: 10px; /* Slight positive spacing */
+    margin-top: 0; /* Remove any default margin */
+}
+
+.blume-popup-header .big-x {
+    font-size: 6rem;
+    vertical-align: middle;
+    line-height: 1;
+    margin-top: -5px;
+    font-family: "Monoton", sans-serif;
+    color: #00e7fc;
+}
+
+.blume-popup-content p {
+    font-size: 18px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.blume-popup-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #000000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+    margin-top: 30px; /* Adjusted to push the button a bit lower, but not all the way down */
+}
+
+.blume-popup-btn:hover {
+    background-color: #00a8be;
+    color: #000000;
+}
+
+.blume-popup-image {
+    flex: 1;
+    overflow: hidden;
+}
+
+.blume-popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blume-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.blume-close-btn:hover {
+    color: #000000;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 480px) {
+    /* Footer Mobile */
+    .footer {
+        padding: 10px; /* Adjust padding for mobile */
+    }
+
+    .footer-content {
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; /* Reduce gap */
+    }
+
+    .footer-info h2 {
+        font-size: 22px; /* Smaller title font on mobile */
+    }
+
+    .footer-info h3 {
+        font-size: 16px; /* Smaller subheading font */
+    }
+
+    .footer-info p {
+        font-size: 14px; /* Smaller description font */
+    }
+
+    .button-item .button {
+        font-size: 14px; /* Smaller button text */
+        padding: 8px 16px; /* Smaller button size */
+    }
+
+    .button-section {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 10px; /* Smaller gap */
+    }
+
+    .social-menu ul {
+        gap: 15px; /* Smaller gap for icons */
+    }
+
+    /* Popup Mobile */
+    .blume-popup {
+        width: 80%; /* Adjust width to fit mobile screen */
+        height: auto;
+        padding: 20px;
+    }
+
+    .blume-popup-inner {
+        flex-direction: column; /* Stack content and image vertically */
+    }
+
+    .blume-popup-content {
+        padding: 20px; /* Adjust content padding */
+    }
+
+    .blume-popup-header {
+        font-size: 35px; /* Smaller header font */
+    }
+
+    .blume-popup-content p {
+        font-size: 14px; /* Smaller paragraph font */
+    }
+
+    .blume-popup-btn {
+        font-size: 14px; /* Smaller button font */
+        padding: 10px 20px; /* Smaller button size */
+    }
+
+    .blume-close-btn {
+        font-size: 20px; /* Smaller close button font */
+    }
+
+    .social-menu ul li a {
+        width: 50px; /* Smaller icon size */
+        height: 50px;
+    }
+
+    .social-menu ul li a i {
+        font-size: 22px; /* Smaller icon size */
+    }
+}
